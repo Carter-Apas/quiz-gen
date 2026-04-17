@@ -177,7 +177,7 @@ export function PlayerScreen({ socket = getSocket() }: PlayerScreenProps) {
               <p className="text-sm text-black/55">
                 {snapshot?.status === "ready" ||
                 snapshot?.status === "collecting"
-                  ? "Waiting for the host to fire up the round."
+                  ? "Waiting for the host to start the game."
                   : snapshot?.status === "leaderboard"
                     ? hasNextQuestion
                       ? "Round complete. Stand by for the next question."

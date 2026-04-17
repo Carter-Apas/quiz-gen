@@ -97,6 +97,39 @@ const leaderboardSnapshot: LobbySnapshot = {
   },
 };
 
+const readySnapshot: LobbySnapshot = {
+  role: "player",
+  code: "ABCD",
+  topic: "Volcanoes",
+  questionCount: 2,
+  quizTitle: "Volcano quiz",
+  status: "ready",
+  players: [
+    {
+      id: "player-1",
+      nickname: "Sam",
+      score: 0,
+      isConnected: true,
+      rank: 1,
+      hasAnswered: false,
+    },
+  ],
+  currentQuestionIndex: 0,
+  totalQuestions: 2,
+  currentQuestion: null,
+  phaseStartedAt: null,
+  phaseEndsAt: null,
+  me: {
+    id: "player-1",
+    nickname: "Sam",
+    score: 0,
+    answerLocked: false,
+    selectedAnswerIndex: null,
+    lastScoreAwarded: null,
+    answerWasCorrect: null,
+  },
+};
+
 describe("PlayerScreen", () => {
   it("lets a player join with room code and nickname", async () => {
     const socket = createFakeSocket();
@@ -146,6 +179,23 @@ describe("PlayerScreen", () => {
 
     expect(
       screen.getByRole("heading", { name: /next round in/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("shows the updated waiting copy before the host starts", async () => {
+    const socket = createFakeSocket();
+    render(
+      <MemoryRouter>
+        <PlayerScreen socket={socket as never} />
+      </MemoryRouter>,
+    );
+
+    await act(async () => {
+      socket.trigger("lobby:snapshot", readySnapshot);
+    });
+
+    expect(
+      screen.getByText(/waiting for the host to start the game/i),
     ).toBeInTheDocument();
   });
 });

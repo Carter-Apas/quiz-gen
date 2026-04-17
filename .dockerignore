@@ -1,0 +1,8 @@
+.git
+.github
+.worktrees
+node_modules
+apps/quiz-gen/node_modules
+apps/quiz-gen/dist
+apps/quiz-gen/dist-server
+coverage

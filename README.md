@@ -1,63 +1,25 @@
-# Quiz Forge
+# Quiz Gen
 
-Kahoot-style realtime trivia with AI-generated quizzes. A host creates a lobby, enters a topic, chooses quiz length, and the server uses OpenAI to generate strict JSON multiple-choice questions. Players join from their phones with a room code and play timed rounds over WebSockets.
+Monorepo for the Quiz Gen app.
 
-## Stack
+## Structure
 
-- Node.js + npm
-- Express + Socket.IO
-- React + Vite
-- Tailwind CSS
-- OpenAI Responses API
-- Vitest + Testing Library
-
-## Setup
-
-1. Install dependencies:
-
-```bash
-npm install
-```
-
-2. Copy the example env file and add your OpenAI key:
-
-```bash
-cp .env.example .env
-```
-
-3. Run the app in development:
-
-```bash
-npm run dev
-```
-
-- Frontend: `http://localhost:5173`
-- Backend: `http://localhost:3001`
-
-## Environment
-
-```env
-OPENAI_API_KEY=your_openai_api_key
-OPENAI_MODEL=gpt-4.1-mini
-PORT=3001
-QUESTION_DURATION_MS=15000
-RESULT_DURATION_MS=4000
-NEXT_ROUND_DELAY_MS=2500
-LEADERBOARD_DURATION_MS=5000
-```
-
-- `NEXT_ROUND_DELAY_MS` controls the short countdown before the next question starts.
-- `LEADERBOARD_DURATION_MS` controls how long the final leaderboard stays on screen before the waiting state.
+- `apps/quiz-gen`: the releasable application
+- `docs/`: local design and planning notes
 
 ## Scripts
 
-- `npm run dev` starts Vite and the Socket.IO server together
-- `npm test` runs the full test suite
-- `npm run build` builds the client and compiles the server
-- `npm start` runs the compiled production server
+Run these from the repo root:
 
-## Notes
+- `npm run dev`
+- `npm run lint`
+- `npm test`
+- `npm run build`
+- `npm run format`
 
-- Lobby state is in memory only.
-- Restart reuses the generated quiz payload and resets scores.
-- A full server restart clears active lobbies.
+## Releases
+
+Releases are managed by `release-please` in manifest mode. When a release is created for `apps/quiz-gen`, GitHub Actions builds and publishes a Docker image to GHCR:
+
+- `ghcr.io/<owner>/quiz-gen:<version>`
+- `ghcr.io/<owner>/quiz-gen:latest`

@@ -1,0 +1,25 @@
+FROM node:22-alpine AS deps
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+COPY apps/quiz-gen/package.json ./apps/quiz-gen/package.json
+
+RUN npm ci
+
+FROM deps AS build
+COPY apps/quiz-gen ./apps/quiz-gen
+WORKDIR /app/apps/quiz-gen
+RUN npm run build
+
+FROM node:22-alpine AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/apps/quiz-gen/package.json ./apps/quiz-gen/package.json
+COPY --from=build /app/apps/quiz-gen/dist ./apps/quiz-gen/dist
+COPY --from=build /app/apps/quiz-gen/dist-server ./apps/quiz-gen/dist-server
+
+WORKDIR /app/apps/quiz-gen
+EXPOSE 3001
+CMD ["node", "dist-server/server/index.js"]
