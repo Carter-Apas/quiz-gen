@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: 30 33 40;
+  --shell: 255 255 252;
+  --accent: 58 72 105;
+  --hot: 191 80 64;
+  --cool: 110 128 170;
+  --success: 58 135 96;
+  color: rgb(var(--ink));
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(110, 128, 170, 0.09),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(58, 72, 105, 0.06),
+      transparent 24%
+    ),
+    linear-gradient(180deg, rgb(249 249 247), rgb(243 244 240));
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  color: rgb(var(--ink));
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@keyframes check-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+
+  70% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes screen-shake {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  20% {
+    transform: translate3d(-4px, 1px, 0);
+  }
+
+  40% {
+    transform: translate3d(3px, -1px, 0);
+  }
+
+  60% {
+    transform: translate3d(-2px, 1px, 0);
+  }
+
+  80% {
+    transform: translate3d(2px, -1px, 0);
+  }
+}
